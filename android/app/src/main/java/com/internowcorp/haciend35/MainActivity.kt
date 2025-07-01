@@ -1,4 +1,4 @@
-package com.basewebviewapp
+package com.internowcorp.hacienda35
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

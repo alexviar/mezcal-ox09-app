@@ -1,4 +1,4 @@
-package com.basewebviewapp
+package com.internowcorp.hacienda35
 
 import android.app.Application
 import com.facebook.react.PackageList

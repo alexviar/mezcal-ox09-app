@@ -79,14 +79,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.basewebviewapp"
+    namespace "com.internowcorp.hacienda35"
     defaultConfig {
-        applicationId "com.mezcalhacienda35"
-
+        applicationId "com.internowcorp.hacienda35"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
-        versionName "1.0.1"
+        versionName "1.0"
     }
     signingConfigs {
         debug {
