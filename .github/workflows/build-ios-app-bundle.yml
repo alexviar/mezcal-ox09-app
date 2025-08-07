@@ -26,13 +26,13 @@ jobs:
 
       - name: Patch SDKROOT to iphonesimulator for CI build
         run: |
-          sed -i.bak 's/SDKROOT = iphoneos;/SDKROOT = iphonesimulator;/g' ios/PurificadorasApp.xcodeproj/project.pbxproj
+          sed -i.bak 's/SDKROOT = iphoneos;/SDKROOT = iphonesimulator;/g' ios/BaseWebViewApp.xcodeproj/project.pbxproj
 
       - name: Build for Simulator
         run: |
           cd ios
-          xcodebuild -workspace PurificadorasApp.xcworkspace \
-            -scheme PurificadorasApp \
+          xcodebuild -workspace BaseWebViewApp.xcworkspace \
+            -scheme BaseWebViewApp \
             -configuration Release \
             -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,name=iPhone 14' \
@@ -54,5 +54,5 @@ jobs:
       - name: Upload .app artifact
         uses: actions/upload-artifact@v4
         with:
-          name: PurificadorasApp-Simulator-App
-          path: ios/build/Build/Products/Release-iphonesimulator/PurificadorasApp.app
+          name: BaseWebViewApp-Simulator-App
+          path: ios/build/Build/Products/Release-iphonesimulator/BaseWebViewApp.app

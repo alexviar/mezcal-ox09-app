@@ -69,16 +69,16 @@ jobs:
       - name: Build IPA
         run: |
           cd ios
-          xcodebuild -workspace PurificadorasApp.xcworkspace \
-            -scheme PurificadorasApp \
+          xcodebuild -workspace BaseWebViewApp.xcworkspace \
+            -scheme BaseWebViewApp \
             -configuration Release \
             -sdk iphoneos \
-            -archivePath "${{github.workspace}}/ios/build/PurificadorasApp.xcarchive" \
+            -archivePath "${{github.workspace}}/ios/build/BaseWebViewApp.xcarchive" \
             -allowProvisioningUpdates \
             archive 1>/dev/null
 
           xcodebuild -exportArchive \
-            -archivePath "${{github.workspace}}/ios/build/PurificadorasApp.xcarchive" \
+            -archivePath "${{github.workspace}}/ios/build/BaseWebViewApp.xcarchive" \
             -exportOptionsPlist ExportOptions.plist \
             -exportPath "${{github.workspace}}/ios/build/export" \
             -allowProvisioningUpdates
@@ -86,7 +86,7 @@ jobs:
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
-          name: PurificadorasApp-IPA
+          name: BaseWebViewApp-IPA
           path: ios/build/export/*.ipa
 
       - name: Clean up
@@ -102,7 +102,7 @@ jobs:
       - name: Download IPA artifact
         uses: actions/download-artifact@v4
         with:
-          name: PurificadorasApp-IPA
+          name: BaseWebViewApp-IPA
           path: ./
 
       - name: Upload to App Store Connect
