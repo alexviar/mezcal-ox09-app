@@ -19,20 +19,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install dependencies
-        run: |
-          npm ci
-
-      - name: Install CocoaPods dependencies
-        run: |
-          cd ios
-          pod install
-
       - name: Decode and save .p12 file from secret
         run: |
           echo "$P12_BASE64" | base64 --decode > certificate.p12
@@ -50,7 +36,7 @@ jobs:
         run: |
           security import certificate.p12 \
             -k build.keychain \
-            -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" \
+            -P '${{ secrets.IOS_CERTIFICATE_PASSWORD }}' \
             -T /usr/bin/codesign \
             -T /usr/bin/security
           security set-key-partition-list \
@@ -60,6 +46,19 @@ jobs:
       - name: List identities (optional debug)
         run: |
           security find-identity -v -p codesigning
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install CocoaPods dependencies
+        run: |
+          cd ios
+          pod install
 
       - name: Install provisioning profile
         run: |
@@ -73,14 +72,14 @@ jobs:
             -scheme BaseWebViewApp \
             -configuration Release \
             -sdk iphoneos \
-            -archivePath "${{github.workspace}}/ios/build/BaseWebViewApp.xcarchive" \
+            -archivePath "${{ github.workspace }}/ios/build/BaseWebViewApp.xcarchive" \
             -allowProvisioningUpdates \
             archive 1>/dev/null
 
           xcodebuild -exportArchive \
-            -archivePath "${{github.workspace}}/ios/build/BaseWebViewApp.xcarchive" \
+            -archivePath "${{ github.workspace }}/ios/build/BaseWebViewApp.xcarchive" \
             -exportOptionsPlist ExportOptions.plist \
-            -exportPath "${{github.workspace}}/ios/build/export" \
+            -exportPath "${{ github.workspace }}/ios/build/export" \
             -allowProvisioningUpdates
 
       - name: Upload IPA artifact
