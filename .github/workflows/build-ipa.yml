@@ -81,7 +81,7 @@ jobs:
             -sdk iphoneos \
             -archivePath "${{ github.workspace }}/ios/build/BaseWebViewApp.xcarchive" \
             -allowProvisioningUpdates \
-            archive 1>/dev/null
+            archive
 
           xcodebuild -exportArchive \
             -archivePath "${{ github.workspace }}/ios/build/BaseWebViewApp.xcarchive" \
