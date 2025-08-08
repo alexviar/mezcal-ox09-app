@@ -25,6 +25,13 @@ jobs:
         env:
           P12_BASE64: ${{ secrets.IOS_CERTIFICATE }}
 
+      - name: Validate certificate
+        run: |
+          openssl pkcs12 -info \
+            -in certificate.p12 \
+            -passin pass:'${{ secrets.IOS_CERTIFICATE_PASSWORD }}' \
+            -noout
+
       - name: Create temporary keychain
         run: |
           security create-keychain -p "" build.keychain
