@@ -32,7 +32,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Necesitamos acceder a tu ubicación actual para mostrarla en el mapa.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Necesitamos acceder a la cámara para tomar una foto para el catálogo de productos</string>
 	<key>UILaunchStoryboardName</key>
