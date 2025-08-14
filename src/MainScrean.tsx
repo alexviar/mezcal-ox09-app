@@ -91,6 +91,18 @@ const MainScreen = ({ onLoaded }: Props) => {
           setIsLoading(false)
           setLoadProgress(1)
         }}
+        javaScriptCanOpenWindowsAutomatically
+        originWhitelist={['*']}
+        onOpenWindow={async (e) => {
+          const url = e.nativeEvent.targetUrl
+
+          return Linking.openURL(url).catch(() => {
+            webViewRef.current?.injectJavaScript(`
+              window.receiveNativeCommand(${JSON.stringify({ type: 'native_linking_failed', payload: { url } })});
+              true;
+            `)
+          })
+        }}
         renderError={() => <WebViewError onRetry={() => {
           setIsLoading(true)
           setLoadProgress(0)
