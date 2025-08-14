@@ -9,12 +9,12 @@ on:
 jobs:
   build-ios:
     if: ${{ vars.ENABLE_IOS_BUILD == 'true' }}
-    runs-on: macos-15 # Usa macOS 15 que incluye Xcode 16
+    runs-on: macos-latest
     steps:
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "16.2"
+          xcode-version: "16.4"
 
       - name: Checkout repository
         uses: actions/checkout@v4
