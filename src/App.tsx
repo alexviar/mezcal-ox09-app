@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, StatusBar } from 'react-native'
 import BootSplash from "react-native-bootsplash"
 import { OneSignal } from 'react-native-onesignal'
 import MainScreen from './MainScrean'
@@ -33,6 +33,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar backgroundColor='white' barStyle="dark-content" />
       <MainScreen onLoaded={() => setMainScreenReady(true)} />
       {shouldShowSplash && <SplashVideo
         onVideoEnd={() => setSplashVideoEnded(true)}
