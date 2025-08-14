@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native'
 import BootSplash from "react-native-bootsplash"
+import { OneSignal } from 'react-native-onesignal'
 import MainScreen from './MainScrean'
 import SplashVideo from './SplashVideo'
 
@@ -11,6 +12,17 @@ const App = () => {
   const [splashTimeoutDone, setSplashTimeoutDone] = useState(false)
   const [splashVideoEnded, setSplashVideoEnded] = useState(false)
 
+  const shouldShowSplash = !splashVideoEnded && (!mainScreenReady || !splashTimeoutDone)
+
+  useEffect(() => {
+    OneSignal.initialize('c727fcf2-c011-4187-8191-6b0d642be733');
+  }, [])
+
+  useEffect(() => {
+    if (shouldShowSplash) return
+    OneSignal.Notifications.requestPermission(false);
+  }, [shouldShowSplash])
+
   useEffect(() => {
     BootSplash.hide({ fade: true })
 
@@ -18,8 +30,6 @@ const App = () => {
 
     return () => clearTimeout(timer);
   }, [])
-
-  const shouldShowSplash = !splashVideoEnded && (!mainScreenReady || !splashTimeoutDone)
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BackHandler, Linking, Platform, StyleSheet, ToastAndroid, View } from 'react-native';
+import { OneSignal } from 'react-native-onesignal';
 import { PERMISSIONS, request } from 'react-native-permissions';
 import WebView from 'react-native-webview';
 import { WebViewError } from './WebViewError';
@@ -51,6 +52,15 @@ const MainScreen = ({ onLoaded }: Props) => {
       else if (data.type === 'REQUEST_CAMERA_PERMISSION') {
         request(Platform.OS === 'android' ? PERMISSIONS.ANDROID.CAMERA : PERMISSIONS.IOS.CAMERA)
       }
+      else if (data.type === 'GET_ONESIGNAL_ID') {
+        OneSignal.User.getOnesignalId().then((id) => {
+          webViewRef.current?.injectJavaScript(`
+            window.receiveNativeCommand(${JSON.stringify({ type: 'GET_ONESIGNAL_ID', payload: { id } })});
+            true;
+          `)
+        })
+      }
+
     } catch (error) {
       console.log('Error parsing message:', error)
     }
