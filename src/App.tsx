@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, StatusBar } from 'react-native'
+import { StatusBar } from 'react-native'
 import { OneSignal } from 'react-native-onesignal'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import MainScreen from './MainScrean'
 import SplashVideo from './SplashVideo'
 
@@ -36,4 +37,8 @@ const App = () => {
   )
 }
 
-export default App
+export default () => (
+  <SafeAreaProvider>
+    <App />
+  </SafeAreaProvider>
+)
