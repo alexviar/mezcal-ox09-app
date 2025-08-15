@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, StatusBar } from 'react-native'
-import BootSplash from "react-native-bootsplash"
 import { OneSignal } from 'react-native-onesignal'
 import MainScreen from './MainScrean'
 import SplashVideo from './SplashVideo'
-
-const MINIMUM_SPLASH_TIME = 3000;
 
 const App = () => {
   const [mainScreenReady, setMainScreenReady] = useState(false)
@@ -23,14 +20,6 @@ const App = () => {
     OneSignal.Notifications.requestPermission(false);
   }, [shouldShowSplash])
 
-  useEffect(() => {
-    BootSplash.hide({ fade: true })
-
-    const timer = setTimeout(() => setSplashTimeoutDone(true), MINIMUM_SPLASH_TIME);
-
-    return () => clearTimeout(timer);
-  }, [])
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar
@@ -40,6 +29,7 @@ const App = () => {
       />
       <MainScreen onLoaded={() => setMainScreenReady(true)} />
       {shouldShowSplash && <SplashVideo
+        onMinimumSplashTimeReached={() => setSplashTimeoutDone(true)}
         onVideoEnd={() => setSplashVideoEnded(true)}
       />}
     </SafeAreaView>

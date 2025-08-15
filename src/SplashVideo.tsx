@@ -1,12 +1,34 @@
-import React from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
+import React, { useEffect, useRef } from 'react'
+import { StyleSheet } from 'react-native'
+import BootSplash from 'react-native-bootsplash'
 import Video from 'react-native-video'
 
 type Props = {
+  onMinimumSplashTimeReached(): void
   onVideoEnd?(): void
 }
 
-const SplashVideo = ({ onVideoEnd }: Props) => {
+const MINIMUM_SPLASH_TIME = 3000
+
+const SplashVideo = ({ onVideoEnd, onMinimumSplashTimeReached }: Props) => {
+  const splashTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const onMinimumSplashTimeReachedRef = useRef(onMinimumSplashTimeReached)
+  onMinimumSplashTimeReachedRef.current = onMinimumSplashTimeReached
+
+  useEffect(() => {
+    return () => {
+      if (splashTimerRef.current) {
+        clearTimeout(splashTimerRef.current)
+      }
+    }
+  }, [])
+
+  const handleVideoLoad = () => {
+    BootSplash.hide({ fade: true })
+    splashTimerRef.current = setTimeout(() => {
+      onMinimumSplashTimeReachedRef.current()
+    }, MINIMUM_SPLASH_TIME)
+  }
 
   const handleVideoEnd = () => {
     if (onVideoEnd) {
@@ -15,23 +37,19 @@ const SplashVideo = ({ onVideoEnd }: Props) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Video
-        source={require('./assets/splash.mp4')}
-        style={styles.video}
-        resizeMode="cover"
-        controls={false}
-        onEnd={handleVideoEnd}
-        onError={(error) => console.log('Video Error:', error)}
-      />
-    </SafeAreaView>
+    <Video
+      source={require('./assets/splash.mp4')}
+      style={styles.video}
+      resizeMode="cover"
+      controls={false}
+      onLoad={handleVideoLoad}
+      onEnd={handleVideoEnd}
+      onError={(error) => console.log('Video Error:', error)}
+    />
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject
-  },
   video: {
     position: 'absolute',
     top: 0,
@@ -41,4 +59,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SplashVideo;
+export default SplashVideo
