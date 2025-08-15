@@ -33,7 +33,11 @@ const App = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar backgroundColor='white' barStyle="dark-content" />
+      <StatusBar
+        // Prevents status bar turning light when WebView is mounted
+        // See react-native-webview GitHub issues: #1059, #3682, #735, #1219
+        barStyle="dark-content"
+      />
       <MainScreen onLoaded={() => setMainScreenReady(true)} />
       {shouldShowSplash && <SplashVideo
         onVideoEnd={() => setSplashVideoEnded(true)}
