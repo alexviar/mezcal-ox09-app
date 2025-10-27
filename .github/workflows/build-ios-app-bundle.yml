@@ -60,7 +60,7 @@ jobs:
             build
         env:
           CI: "true"
-          DEVELOPER_DIR: "/Applications/Xcode_16.4.app/Contents/Developer"
+          # DEVELOPER_DIR: "/Applications/Xcode_16.4.app/Contents/Developer"
 
       - name: List build output
         run: ls -R ios/build/Build/Products

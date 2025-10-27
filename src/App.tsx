@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'react-native'
 import { OneSignal } from 'react-native-onesignal'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import MainScreen from './MainScrean'
+import MainScreen from './MainScreen'
 import SplashVideo from './SplashVideo'
 
 const App = () => {
